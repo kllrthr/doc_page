@@ -1,0 +1,6 @@
+name: Doc page module
+description: Creates a page with documentation.
+package: Evry
+type: module
+version: 1.0
+core: 8.x

@@ -1,0 +1,6 @@
+doc.admin:
+  title: 'Doc page settings'
+  description: 'Set up doc page'
+  parent: system.admin_config_content
+  route_name: doc.settings
+  weight: 100

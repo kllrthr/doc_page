@@ -1,0 +1,14 @@
+doc.content:
+  path: '/doc'
+  defaults:
+    _controller: '\Drupal\doc_page\Controller\DocController::content'
+    _title: 'Documentation'
+  requirements:
+    _permission: 'access content'
+doc.settings:
+  path: '/admin/config/content/doc'
+  defaults:
+    _form: '\Drupal\doc_page\Form\DocSettingsForm'
+    _title: 'Documentation settings'
+  requirements:
+    _permission: 'administer doc page'
