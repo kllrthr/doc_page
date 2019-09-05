@@ -6,4 +6,4 @@ version: 1.0
 core: 8.x
 configure: doc.settings
 dependencies:
-  - markdown
+  - ghmarkdown
