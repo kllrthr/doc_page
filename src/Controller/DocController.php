@@ -57,16 +57,17 @@ class DocController {
 
     $url_data = parse_url($url);
     $root = $url_data['scheme']. '://' .$url_data['host'] .'/';
-    $image_path = $root . $config->get('doc_img_root');
+
+    //Make root path for images.
+    $image_path_array = $url_data['path'];
+    $image_path_array = explode('/', $image_path_array);
+    array_pop($image_path_array);
+    $image_path = $root.implode('/', $image_path_array).'/';
 
     // Rewrite image paths.
     foreach($imageTags as $tag) {
       $src = $tag->getAttribute('src');
-      $src_a = explode('/', $src);
-      if (is_array($src_a) && isset($src_a[0])) {
-        $file_name = end($src_a);
-        $tag->setAttribute('src', $image_path . $file_name);
-      }
+      $tag->setAttribute('src', $image_path . $src);
     }
 
     // Create html from the DOM object.
@@ -78,5 +79,18 @@ class DocController {
       '#type' => 'markup',
       '#markup' =>  '<div class="documentation-wrap">' . $markdown_display . '</div>',
     );
+  }
+
+  public function doc_build_url(array $parts) {
+    return (isset($parts['scheme']) ? "{$parts['scheme']}:" : '') .
+      ((isset($parts['user']) || isset($parts['host'])) ? '//' : '') .
+      (isset($parts['user']) ? "{$parts['user']}" : '') .
+      (isset($parts['pass']) ? ":{$parts['pass']}" : '') .
+      (isset($parts['user']) ? '@' : '') .
+      (isset($parts['host']) ? "{$parts['host']}" : '') .
+      (isset($parts['port']) ? ":{$parts['port']}" : '') .
+      (isset($parts['path']) ? "{$parts['path']}" : '') .
+      (isset($parts['query']) ? "?{$parts['query']}" : '') .
+      (isset($parts['fragment']) ? "#{$parts['fragment']}" : '');
   }
 }
