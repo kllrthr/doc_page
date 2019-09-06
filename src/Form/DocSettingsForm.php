@@ -38,7 +38,7 @@ class DocSettingsForm extends ConfigFormBase {
     $form['doc_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Url'),
-      '#description' => $this->t('Enter url to documentation file'),
+      '#description' => $this->t('Enter url to documentation file.<br> Images in the markdown file must be linked relative to the .md file.'),
       '#default_value' => $config->get('doc_url'),
       '#required' => TRUE,
     ];
