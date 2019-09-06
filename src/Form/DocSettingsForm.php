@@ -40,6 +40,18 @@ class DocSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Url'),
       '#description' => $this->t('Enter url to documentation file'),
       '#default_value' => $config->get('doc_url'),
+      '#required' => TRUE,
+    ];
+
+    $form['doc_img_root'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Image directory'),
+      '#description' => $this->t('Enter the path to image directory'),
+      '#default_value' => $config->get('doc_img_root'),
+      '#required' => TRUE,
+      '#attributes' => [
+        'placeholder' => 'hb-doc/psd2/assets/images/'
+      ]
     ];
 
     return parent::buildForm($form, $form_state);
@@ -51,10 +63,16 @@ class DocSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    // Save url.
+    // Save the url.
     $this->config('doc.adminsettings')
       ->set('doc_url', $form_state->getValue('doc_url'))
       ->save();
+
+    // Save the world.
+    $this->config('doc.adminsettings')
+      ->set('doc_img_root', $form_state->getValue('doc_img_root'))
+      ->save();
+
   }
 
   /**

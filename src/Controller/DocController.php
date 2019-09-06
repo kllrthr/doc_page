@@ -33,13 +33,12 @@ class DocController {
     // If link to markdown file.
     if (isset($url) && $url != '') {
       // Get content.
-      $path = $url;
-      $file_headers = @get_headers($path);
+      $file_headers = @get_headers($url);
       if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
         $error['#markup'] = 'File was not found';
         return $error;
       } else {
-        $html = file_get_contents($path);
+        $html = file_get_contents($url);
       }
       if (!isset($html) || $html == '') {
         return $error;
@@ -56,10 +55,18 @@ class DocController {
     $doc = Html::load($markdown_display);
     $imageTags = $doc->getElementsByTagName('img');
 
+    $url_data = parse_url($url);
+    $root = $url_data['scheme']. '://' .$url_data['host'] .'/';
+    $image_path = $root . $config->get('doc_img_root');
+
     // Rewrite image paths.
     foreach($imageTags as $tag) {
       $src = $tag->getAttribute('src');
-      $tag->setAttribute('src', $path.$src);
+      $src_a = explode('/', $src);
+      if (is_array($src_a) && isset($src_a[0])) {
+        $file_name = end($src_a);
+        $tag->setAttribute('src', $image_path . $file_name);
+      }
     }
 
     // Create html from the DOM object.
