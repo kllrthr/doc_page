@@ -11,10 +11,40 @@ use Drupal\Component\Utility\Html;
 use Drupal\ghmarkdown\cebe\markdown\MarkdownExtra;
 
 class DocController {
-  public function content() {
+  public function homepageContent() {
+    $config = \Drupal::config('doc.adminsettings');
+    $url = $config->get('homepage_url');
+    return $this->content($url);
+  }
+
+  public function getContent() {
+    $config = \Drupal::config('doc.adminsettings');
+    $url = $config->get('get_url');
+    return $this->content($url);
+  }
+
+  public function docContent() {
+    $config = \Drupal::config('doc.adminsettings');
+    $url = $config->get('doc_url');
+    return $this->content($url);
+  }
+
+  public function enrollmentContent() {
+    $config = \Drupal::config('doc.adminsettings');
+    $url = $config->get('enrollment_url');
+    return $this->content($url);
+  }
+
+  public function contingencyContent() {
+    $config = \Drupal::config('doc.adminsettings');
+    $url = $config->get('contingency_url');
+    return $this->content($url);
+  }
+
+  public function content($url = NULL) {
     $path = '';
     $error = array(
-      '#markup' => 'No documentation found. Please contact an administrator.',
+      '#markup' => 'No content found. Please contact an administrator.',
     );
 
     // Get the current user
@@ -25,10 +55,6 @@ class DocController {
       $admin_link = Link::createFromRoute('Administer documentation page', 'doc.settings', []);
       $error['admin_link']['#markup'] = '<br><br>' . $admin_link->toString();
     }
-
-    //Get values
-    $config = \Drupal::config('doc.adminsettings');
-    $url = $config->get('doc_url');
 
     // If link to markdown file.
     if (isset($url) && $url != '') {
