@@ -1,16 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<style>
+  .test {
+    color: red;
+  }
+</style>
+<p>In order to access the PSD2 APIs you will need an eIDAS QSealC certificate.<br/>
+  The following page gives information about eIDAS certificates and a list of QTSPs which provide PSD2 compliant Qualified certificates:<br/> <a href="https://www.openbankingeurope.eu/qtsps-and-eidas/" class="std-link" target="_blank">https://www.openbankingeurope.eu/qtsps-and-eidas</a></p>
+<h2 class="test">Sandbox</h2>
+<p>Before you can use the PSD2 APIs in the sandbox you need an QSealC test certificate available from one of the QTSP providers.<br/>
+  There is no manual registration needed for accessing PSD2-APIs in the sandbox.<br/>
+  When you access one of the APIs for the first time <a href="/documentation" class="std-link">(see documentation)</a>, we will verify the certificate and enroll you as a valid TPP in the sandbox environment.</p>
 
-  <div class="page">
-    <h2>Test page</h2>
-    <p>Lorem ipsum dolor sit amet</p>
-    <img src="testimg.png"/>
-  </div>
+<h2>Production</h2>
+<p class="test">Before you access the PSD2 APIs in production, you need to be a PSD2-approved TPP with one of the roles: AISP, PISP, CBPII.<br/>
+  You also need a PSD2 compliant QcealC production certificate available from one of the QTSP providers.<br/>
+  When you access one of the APIs for the first time <a href="/documentation" class="std-link">(see documentation)</a>, we will verify the certificate and TPP roles and enroll you as a valid TPP in the production environment.<br/>
+<p>If you have problems accessing sandbox or production, please contact us at: <span id="contact" class="contact"></span>.</p>
+<p>As a valid TPP, you will have access to the PSD2-APIs for the following banks:</p>
 
-</body>
-</html>
+<ul class="bank-list">
+  <li id="bank-9235"><a href="https://openbanking.bnbank.no/portal-sandbox/startpage" target="_blank">BN Bank ASA</a></li>
+  <li id="bank-3543"><a href="https://openbanking.etne-sparebank.no/portal-sandbox/startpage" target="_blank">Etne Sparebank</a></li>
+  <li id="bank-3411"><a href="https://openbanking.fanasparebank.no/portal-sandbox/startpage" target="_blank">Fana Sparebank</a></li>
+  <li id="bank-3030"><a href="https://openbanking.flekkefjordsparebank.no/portal-sandbox/startpage" target="_blank">Flekkefjord Sparebank</a></li>
+  <li id="bank-9775"><a href="https://openbanking.gjensidige.no/portal-sandbox/startpage" target="_blank">Gjensidige</a></li>
+  <li id="bank-9055"><a href="https://openbanking.handelsbanken.no/portal-sandbox/startpage" target="_blank">Handelsbanken</a></li>
+  <li id="bank-3240"><a href="https://openbanking.haugesund-sparebank.no/portal-sandbox/startpage" target="_blank">Haugesund Sparebank</a></li>
+  <li id="bank-4530"><a href="https://openbanking.hsb.no/portal-sandbox/startpage" target="_blank">Helgeland Sparebank</a></li>
+  <li id="bank-8317"><a href="https://openbanking.klp.no/portal-sandbox/startpage" target="_blank">KLP Banken</a></li>
+  <li id="bank-9365"><a href="https://openbanking.landkreditt.no/portal-sandbox/startpage" target="_blank">Landkreditt Bank AS</a></li>
+  <li id="bank-2850"><a href="https://openbanking.lillesands-sparebank.no/portal-sandbox/startpage" target="_blank">Lillesands Sparebank</a></li>
+  <li id="bank-3785"><a href="https://openbanking.luster-sparebank.no/portal-sandbox/startpage" target="_blank">Luster Sparebank</a></li>
+  <li id="bank-9820"><a href="https://openbanking.obos.no/portal-sandbox/startpage" target="_blank">OBOS-banken AS</a></li>
+  <li id="bank-0066"><a href="https://openbanking.okq8bank.se/portal-sandbox/startpage" target="_blank">OKQ8</a></li>
+  <li id="bank-9380"><a href="https://openbanking.paretobank.no/portal-sandbox/startpage" target="_blank">Pareto Bank ASA</a></li>
+  <li id="bank-9710"><a href="https://openbanking.sbanken.no/portal-sandbox/startpage" target="_blank">Sbanken</a></li>
+  <li id="bank-3361"><a href="https://openbanking.skudeaakra.no/portal-sandbox/startpage" target="_blank">Skudenes &amp; Aakra Sparebank</a></li>
+  <li id="bank-2544"><a href="https://psd2.s1bv.no/portal-sandbox/startpage" target="_blank">SpareBank 1 BV</a></li>
+  <li id="bank-2095"><a href="https://psd2.s1g.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Gudbrandsdal</a></li>
+  <li id="bank-2320"><a href="https://psd2.sb1.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Hallingdal Valdres</a></li>
+  <li id="bank-2085"><a href="https://psd2.sb1ls.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Lom og SkjÃ¥k</a></li>
+  <li id="bank-2270"><a href="https://psd2.sb1modum.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Modum</a></li>
+  <li id="bank-4701"><a href="https://psd2.snn.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Nord-Norge</a></li>
+  <li id="bank-3930"><a href="https://psd2.snv.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Nordvest</a></li>
+  <li id="bank-2280"><a href="https://psd2.rhbank.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Ringerike Hadeland</a></li>
+  <li id="bank-4201"><a href="https://psd2.smn.no/portal-sandbox/startpage" target="_blank">SpareBank 1 SMN</a></li>
+  <li id="bank-3201"><a href="https://psd2.sr-bank.no/portal-sandbox/startpage" target="_blank">SpareBank 1 SR-Bank</a></li>
+  <li id="bank-3995"><a href="https://psd2.sparebanken.no/portal-sandbox/startpage" target="_blank">SpareBank 1 SÃ¸re SunnmÃ¸re</a></li>
+  <li id="bank-3610"><a href="https://psd2.sb1telemark.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Telemark</a></li>
+  <li id="bank-1080"><a href="https://psd2.soa.sparebank1.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Ã˜stfold Akershus</a></li>
+  <li id="bank-1802"><a href="https://psd2.sb1ostlandet.no/portal-sandbox/startpage" target="_blank">SpareBank 1 Ã˜stlandet</a></li>
+  <li id="bank-3910"><a href="https://openbanking.sbm.no/portal-sandbox/startpage" target="_blank">Sparebanken MÃ¸re</a></li>
+  <li id="bank-3890"><a href="https://openbanking.ssf.no/portal-sandbox/startpage" target="_blank">Sparebanken Sogn og Fjordane</a></li>
+  <li id="bank-2811"><a href="https://openbanking.sor.no/portal-sandbox/startpage" target="_blank">Sparebanken SÃ¸r</a></li>
+  <li id="bank-2220"><a href="https://openbanking.oest.no/portal-sandbox/startpage" target="_blank">Sparebanken Ã˜st</a></li>
+  <li id="bank-3060"><a href="https://openbanking.spareskillingsbanken.no/portal-sandbox/startpage" target="_blank">Spareskillingsbanken</a></li>
+  <li id="bank-1430"><a href="https://openbanking.swedbank.no/portal-sandbox/startpage" target="_blank">Swedbank</a></li>
+  <li id="bank-3090"><a href="https://openbanking.sgsparebank.no/portal-sandbox/startpage" target="_blank">SÃ¸gne og Greipstad Sparebank</a></li>
+  <li id="bank-3480"><a href="https://openbanking.vossabanken.no/portal-sandbox/startpage" target="_blank">Voss Sparebank</a></li>
+</ul>
