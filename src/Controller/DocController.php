@@ -169,7 +169,7 @@ class DocController {
       $image_path_array = explode('/', $image_path_array);
       array_pop($image_path_array);
       $image_path = $root.implode('/', $image_path_array).'/';
-
+      $image_path = str_replace('//', '/', $image_path);
       // Rewrite image paths.
       foreach($imageTags as $tag) {
         $src = $tag->getAttribute('src');
