@@ -88,49 +88,77 @@ class DocController {
   }
 
   public function Content($url = NULL) {
-      $path = '';
-      $error = array(
-        '#markup' => 'No content found. Please contact an administrator.',
-      );
 
-      // Get the current user
-      $user = \Drupal::currentUser();
+    $error = array(
+      '#markup' => 'No content found. Please contact an administrator.',
+    );
 
-      // Add a link to settings form if user has permission.
-      if ($user->hasPermission('administer doc page')) {
-        $admin_link = Link::createFromRoute('Administer documentation page', 'doc.settings', []);
-        $error['admin_link']['#markup'] = '<br><br>' . $admin_link->toString();
-      }
+    // Get the current user
+    $user = \Drupal::currentUser();
 
-      // If link to markdown file.
-      if (isset($url) && $url != '') {
-        // Get content.
-        $file_headers = @get_headers($url);
-        if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
-          $error['#markup'] = 'File was not found';
-          return $error;
-        } else {
-          $html = file_get_contents($url);
-        }
-        if (!isset($html) || $html == '') {
-          return $error;
-        }
+    // Add a link to settings form if user has permission.
+    if ($user->hasPermission('administer doc page')) {
+      $admin_link = Link::createFromRoute('Administer documentation page', 'doc.settings', []);
+      $error['admin_link']['#markup'] = '<br><br>' . $admin_link->toString();
+    }
+
+    // If link to markdown file.
+    if (isset($url) && $url != '') {
+      // Get content.
+      $file_headers = @get_headers($url);
+      if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+        $error['#markup'] = 'File was not found';
+        return $error;
       } else {
+        $html = file_get_contents($url);
+        dpm($html);
+      }
+      if (!isset($html) || $html == '') {
         return $error;
       }
+    } else {
+      return $error;
+    }
 
-      $html = $this->rewritePaths($html, $url);
+    $html = $this->rewritePaths($html, $url);
+
+    $styles = $this->getStyles($html);
+
+    $html = str_replace('*/', '', $html);
+
 
     // Return html.
-    return array(
+    $build = array(
       '#type' => 'markup',
       '#markup' =>  '<div class="documentation-wrap">' . $html . '</div>',
     );
+    if (isset($styles) && $styles !== '') {
+      $build['#attached']['html_head'][] = [
+        [
+          '#tag' => 'style',
+          '#value' => $styles,
+        ], 'doc-css'
+      ];
+    }
+    return $build;
+  }
+
+  public function getStyles($html) {
+    $doc = Html::load($html);
+    $doc_styles = $doc->getElementsByTagName('style');
+    $styles = '';
+    foreach ($doc_styles as $node) {
+      $style = str_replace('<!--/*--><![CDATA[/* ><!--*/', '', $node->nodeValue);
+      $style = str_replace('/*--><!]]>*/', '', $style);
+      $styles .= $style;
+    }
+    return $styles;
   }
 
   public function rewritePaths($html, $url) {
       // Create a DOM object from the html.
       $doc = Html::load($html);
+
       $imageTags = $doc->getElementsByTagName('img');
 
       $url_data = parse_url($url);
