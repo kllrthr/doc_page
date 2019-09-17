@@ -129,7 +129,7 @@ class DocController {
     // Return html.
     $build = array(
       '#type' => 'markup',
-      '#markup' =>  '<div class="documentation-wrap">' . $html . '</div>',
+      '#markup' =>  '<div class="external-content-wrap">' . $html . '</div>',
     );
     if (isset($styles) && $styles !== '') {
       $build['#attached']['html_head'][] = [
@@ -162,13 +162,15 @@ class DocController {
 
       $url_data = parse_url($url);
       $root = $url_data['scheme']. '://' .$url_data['host'] .'/';
+      if (substr($root, -1) !== '/') {
+        $root .= '/';
+      }
 
       //Make root path for images.
       $image_path_array = $url_data['path'];
       $image_path_array = explode('/', $image_path_array);
       array_pop($image_path_array);
-      $image_path = $root.implode('/', $image_path_array).'/';
-      $image_path = str_replace('//', '/', $image_path);
+      $image_path = $root.implode('/', array_filter($image_path_array)).'/';
       // Rewrite image paths.
       foreach($imageTags as $tag) {
         $src = $tag->getAttribute('src');
