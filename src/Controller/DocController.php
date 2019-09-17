@@ -111,7 +111,6 @@ class DocController {
         return $error;
       } else {
         $html = file_get_contents($url);
-        dpm($html);
       }
       if (!isset($html) || $html == '') {
         return $error;
