@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Contains \Drupal\doc_page\Controller\DocController.
+ * Contains \Drupal\doc_page\Controller\HtmlPageController.
  */
 
-namespace Drupal\doc_page\Controller;
+namespace Drupal\html_pages\Controller;
 
 use Drupal\Core\Link;
 use Drupal\Component\Utility\Html;
 use Drupal\ghmarkdown\cebe\markdown\MarkdownExtra;
 
-class DocController {
+class HtmlPageController {
   public function homepageContent() {
     $config = \Drupal::config('doc.adminsettings');
     $url = $config->get('homepage_url');
@@ -21,12 +21,6 @@ class DocController {
     $config = \Drupal::config('doc.adminsettings');
     $url = $config->get('get_url');
     return $this->content($url);
-  }
-
-  public function docContent() {
-    $config = \Drupal::config('doc.adminsettings');
-    $url = $config->get('doc_url');
-    return $this->markdownContent($url);
   }
 
   public function enrollmentContent() {
@@ -41,51 +35,6 @@ class DocController {
     return $this->content($url);
   }
 
-  public function markdownContent($url = NULL) {
-    $path = '';
-    $error = array(
-      '#markup' => 'No content found. Please contact an administrator.',
-    );
-
-    // Get the current user
-    $user = \Drupal::currentUser();
-
-    // Add a link to settings form if user has permission.
-    if ($user->hasPermission('administer doc page')) {
-      $admin_link = Link::createFromRoute('Administer documentation page', 'doc.settings', []);
-      $error['admin_link']['#markup'] = '<br><br>' . $admin_link->toString();
-    }
-
-    // If link to markdown file.
-    if (isset($url) && $url != '') {
-      // Get content.
-      $file_headers = @get_headers($url);
-      if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
-        $error['#markup'] = 'File was not found';
-        return $error;
-      } else {
-        $html = file_get_contents($url);
-      }
-      if (!isset($html) || $html == '') {
-        return $error;
-      }
-    } else {
-      return $error;
-    }
-
-    // Create html from the markdown.
-    $markdown = new MarkdownExtra();
-    $markdown_display = $markdown->parse($html);
-
-    // Create a DOM object from the html.
-    $markdown_display = $this->rewritePaths($markdown_display, $url);
-
-    // Return html.
-    return array(
-      '#type' => 'markup',
-      '#markup' =>  '<div class="documentation-wrap">' . $markdown_display . '</div>',
-    );
-  }
 
   public function Content($url = NULL) {
 

@@ -1,6 +1,7 @@
-doc.admin:
+doc.settings:
   title: 'Developer portal content settings'
   description: 'Set up Developer portal pages'
   parent: system.admin_config_content
   route_name: doc.settings
+  base_route: doc.settings
   weight: 100

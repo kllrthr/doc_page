@@ -1,0 +1,5 @@
+doc.settings:
+  title: 'Markdown files'
+  route_name: doc.settings
+  base_route: doc.settings
+  weight: 100

@@ -1,0 +1,5 @@
+html.settings:
+  title: 'HTML files'
+  route_name: html.settings
+  base_route: doc.settings
+  weight: 101

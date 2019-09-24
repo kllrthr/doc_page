@@ -1,0 +1,24 @@
+doc.settings:
+  path: '/admin/config/content/doc'
+  defaults:
+    _form: '\Drupal\doc_page\Form\DocSettingsForm'
+    _title: 'Developer Portal external content settings'
+  requirements:
+    _permission: 'administer doc page'
+
+doc.content:
+  path: '/documentation'
+  defaults:
+    _controller: '\Drupal\doc_page\Controller\DocController::docContent'
+    _title: 'Documentation'
+  requirements:
+    _permission: 'access content'
+
+release.content:
+  path: '/releaseinfo'
+  defaults:
+    _controller: '\Drupal\doc_page\Controller\DocController::releaseContent'
+    _title: 'Release info'
+  requirements:
+    _permission: 'access content'
+

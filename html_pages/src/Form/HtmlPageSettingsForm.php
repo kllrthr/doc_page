@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\doc_page\Form;
+namespace Drupal\html_pages\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,7 +11,7 @@ use Drupal\Component\Utility\UrlHelper;
  *
  * @internal
  */
-class DocSettingsForm extends ConfigFormBase {
+class HtmlPageSettingsForm extends ConfigFormBase {
 
   /**
   * {@inheritdoc}
@@ -35,80 +35,41 @@ class DocSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('doc.adminsettings');
 
-    $form['homepage_page'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Home'),
-      '#open' => TRUE,
+    $form['html'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Html pages'),
+      '#description' => $this->t('Enter urls to html files.<br> Images in the file must be linked relative to the file.'),
     ];
 
-    $form['homepage_url'] = [
+    $form['html']['homepage_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Url'),
-      '#description' => $this->t('Enter url to markdown file.<br> Images in the markdown file must be linked relative to the .md file.'),
+      '#title' => $this->t('Home url'),
       '#default_value' => $config->get('homepage_url'),
       '#required' => TRUE,
-      '#group' => 'homepage_page',
     ];
 
-    $form['get_page'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Getting started'),
-      '#open' => TRUE,
-    ];
-
-    $form['get_url'] = [
+    $form['html']['get_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Url'),
-      '#description' => $this->t('Enter url to markdown file.<br> Images in the markdown file must be linked relative to the .md file.'),
+      '#title' => $this->t('Getting started url'),
       '#default_value' => $config->get('get_url'),
       '#required' => TRUE,
-      '#group' => 'get_page',
     ];
 
-    $form['doc_page'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Documentation'),
-      '#open' => TRUE,
-    ];
-
-    $form['doc_url'] = [
+    $form['html']['enrollment_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Url'),
-      '#description' => $this->t('Enter url to markdown file.<br> Images in the markdown file must be linked relative to the .md file.'),
-      '#default_value' => $config->get('doc_url'),
-      '#required' => TRUE,
-      '#group' => 'doc_page',
-    ];
-
-    $form['enrollment_page'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Enrollment'),
-      '#open' => TRUE,
-    ];
-
-    $form['enrollment_url'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Url'),
-      '#description' => $this->t('Enter url to markdown file.<br> Images in the markdown file must be linked relative to the .md file.'),
+      '#title' => $this->t('Enrollment url'),
       '#default_value' => $config->get('enrollment_url'),
       '#required' => TRUE,
-      '#group' => 'enrollment_page',
     ];
 
-    $form['contingency_page'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Contingency'),
-      '#open' => TRUE,
-    ];
-
-    $form['contingency_url'] = [
+    $form['html']['contingency_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Url'),
-      '#description' => $this->t('Enter url to markdown file.<br> Images in the markdown file must be linked relative to the .md file.'),
+      '#title' => $this->t('Contingency url'),
       '#default_value' => $config->get('contingency_url'),
       '#required' => TRUE,
-      '#group' => 'contingency_page',
     ];
+
+
 
     return parent::buildForm($form, $form_state);
   }
@@ -128,9 +89,6 @@ class DocSettingsForm extends ConfigFormBase {
       ->set('get_url', $form_state->getValue('get_url'))
       ->save();
 
-    $this->config('doc.adminsettings')
-      ->set('doc_url', $form_state->getValue('doc_url'))
-      ->save();
 
     $this->config('doc.adminsettings')
       ->set('enrollment_url', $form_state->getValue('enrollment_url'))
@@ -152,10 +110,6 @@ class DocSettingsForm extends ConfigFormBase {
 
     if ($form_state->getValue('get_url') != '' && UrlHelper::isValid($form_state->getValue('get_url'), TRUE) == FALSE) {
       $form_state->setErrorByName('get_url', $this->t("Getting started URL doesn't look right"));
-    }
-
-    if ($form_state->getValue('doc_url') != '' && UrlHelper::isValid($form_state->getValue('doc_url'), TRUE) == FALSE) {
-      $form_state->setErrorByName('doc_url', $this->t("This URL doesn't look right"));
     }
 
     if ($form_state->getValue('enrollment_url') != '' && UrlHelper::isValid($form_state->getValue('enrollment_url'), TRUE) == FALSE) {
