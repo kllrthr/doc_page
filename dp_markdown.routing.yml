@@ -1,5 +1,5 @@
 doc.settings:
-  path: '/admin/config/content/doc'
+  path: '/admin/config/content/markdown'
   defaults:
     _form: '\Drupal\dp_markdown\Form\DocSettingsForm'
     _title: 'Developer Portal external content settings'
