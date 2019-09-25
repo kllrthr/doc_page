@@ -1,20 +1,18 @@
-# Doc settings
+# Developer markdown
 
-This module is an alternative to using iframes for dispaying external documentation.
+This module is an alternative to using iframes.
 
 # Install
 
-Place this module in drupal/modules/custom/ 
-
-It should look like this: drupal/modules/custom/doc_page
+Path to module should look like this drupal/modules/custom/dp_markdown 
 
 Activate the module on the "extend" page. (/admin/modules)
 
-#Use
+# Use
 
-Go to the permission page and add the permission: "Administer documentation page" to the role that should have access. This is not needed if you are user 1.
+Go to the permission page and enable the permission: "Administer external Developer Portal page settings". This is not needed if you are user 1.
 
-Navigate to /admin/config/content/doc and enter the url for the documentation page source. This for is also linked from the Configuration page.
+Navigate to /admin/config/content/markdown to configure the content.
 
 These are the pages set up so far:
 - /home
