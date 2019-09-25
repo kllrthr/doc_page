@@ -19,7 +19,6 @@ Navigate to /admin/config/content/doc and enter the url for the documentation pa
 These are the pages set up so far:
 - /home
 - /gettingstarted
-- /documentation
 - /enrollment
 - /contingency
 
