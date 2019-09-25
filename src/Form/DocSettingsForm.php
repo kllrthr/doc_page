@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\doc_page\Form;
+namespace Drupal\dp_markdown\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;

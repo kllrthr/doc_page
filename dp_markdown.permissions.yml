@@ -1,0 +1,4 @@
+administer doc page:
+  title: 'Administer external Developer Portal page settings'
+  description: 'A custom permission for configuring Developer Portal pages.'
+  restrict access: TRUE

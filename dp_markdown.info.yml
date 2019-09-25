@@ -1,5 +1,5 @@
-name: Doc page module
-description: Creates a page with documentation.
+name: Developer Portal Markdown
+description: Creates html pages from markdown files.
 package: Evry
 type: module
 version: 1.0

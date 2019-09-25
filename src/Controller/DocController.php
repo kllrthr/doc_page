@@ -4,40 +4,29 @@
  * Contains \Drupal\doc_page\Controller\HtmlPageController.
  */
 
-namespace Drupal\html_pages\Controller;
+namespace Drupal\dp_markdown\Controller;
 
 use Drupal\Core\Link;
 use Drupal\Component\Utility\Html;
 use Drupal\ghmarkdown\cebe\markdown\MarkdownExtra;
 
-class HtmlPageController {
-  public function homepageContent() {
+class DocController {
+
+  public function docContent() {
     $config = \Drupal::config('doc.adminsettings');
-    $url = $config->get('homepage_url');
-    return $this->content($url);
+    $url = $config->get('doc_url');
+    return $this->markdownContent($url);
   }
 
-  public function getContent() {
+  public function releaseContent() {
     $config = \Drupal::config('doc.adminsettings');
-    $url = $config->get('get_url');
-    return $this->content($url);
-  }
-
-  public function enrollmentContent() {
-    $config = \Drupal::config('doc.adminsettings');
-    $url = $config->get('enrollment_url');
-    return $this->content($url);
-  }
-
-  public function contingencyContent() {
-    $config = \Drupal::config('doc.adminsettings');
-    $url = $config->get('contingency_url');
-    return $this->content($url);
+    $url = $config->get('release_url');
+    return $this->markdownContent($url);
   }
 
 
-  public function Content($url = NULL) {
-
+  public function markdownContent($url = NULL) {
+    $path = '';
     $error = array(
       '#markup' => 'No content found. Please contact an administrator.',
     );
@@ -68,39 +57,18 @@ class HtmlPageController {
       return $error;
     }
 
-    $html = $this->rewritePaths($html, $url);
+    // Create html from the markdown.
+    $markdown = new MarkdownExtra();
+    $markdown_display = $markdown->parse($html);
 
-    $styles = $this->getStyles($html);
-
-    $html = str_replace('*/', '', $html);
-
+    // Create a DOM object from the html.
+    $markdown_display = $this->rewritePaths($markdown_display, $url);
 
     // Return html.
-    $build = array(
+    return array(
       '#type' => 'markup',
-      '#markup' =>  '<div class="external-content-wrap">' . $html . '</div>',
+      '#markup' =>  '<div class="documentation-wrap">' . $markdown_display . '</div>',
     );
-    if (isset($styles) && $styles !== '') {
-      $build['#attached']['html_head'][] = [
-        [
-          '#tag' => 'style',
-          '#value' => $styles,
-        ], 'doc-css'
-      ];
-    }
-    return $build;
-  }
-
-  public function getStyles($html) {
-    $doc = Html::load($html);
-    $doc_styles = $doc->getElementsByTagName('style');
-    $styles = '';
-    foreach ($doc_styles as $node) {
-      $style = str_replace('<!--/*--><![CDATA[/* ><!--*/', '', $node->nodeValue);
-      $style = str_replace('/*--><!]]>*/', '', $style);
-      $styles .= $style;
-    }
-    return $styles;
   }
 
   public function rewritePaths($html, $url) {

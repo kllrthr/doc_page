@@ -1,4 +1,0 @@
-administer doc page:
-  title: 'Administer documentation page'
-  description: 'A custom permission for configuring the documentation page.'
-  restrict access: TRUE
