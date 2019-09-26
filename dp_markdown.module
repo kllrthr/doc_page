@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * dp_markdown stuff.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function dp_markdown_cron() {
+  // Make sure content is updated when cron is run.
+  drupal_flush_all_caches();
+  \Drupal::logger('dp_markdodwn')->notice('Cache has been flushed');
+}
